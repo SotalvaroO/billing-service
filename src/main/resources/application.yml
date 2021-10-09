@@ -1,0 +1,57 @@
+server:
+  port: ${PORT:0}
+  error:
+    include-stacktrace: never #Evita que muestre el trace en el response
+
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+# To See H2 Console in Browser:
+# http://localhost:8001/h2-console
+# Enabling H2 Console
+spring:
+  cloud:
+    config:
+      enabled: false
+  application:
+    name: billing-service
+  h2:
+    console:
+      enabled: true
+  # ===============================
+  # DB
+  # ===============================
+  datasource:
+    url: jdbc:mysql://billing-service-so.mysql.database.azure.com:3306/billing-service?useSSL=true&requireSSL=false
+    #driverClassName: org.h2.Driver
+    #driverClassName: com.mysql.jdbc.Driver
+    #driverClassName: com.mysql.cj.jdbc.Driver
+    #platform: h2
+    username: sotalvaroo@billing-service-so
+    password: Pija1234
+#  config:
+#    import: optional: configserver:
+  # ===============================
+  # JPA / HIBERNATE
+  # ===============================
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    #database-platform: org.hibernate.dialect.H2Dialect
+    #database-platform: org.hibernate.dialect.MySQL5Dialect
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: false
+        format_sql: false
+    defer-datasource-initialization: true
+##logging:
+##  pattern:
+##    console: "%d{yyyy-MM-dd HH:mm:ss} ${LOG_LEVEL_PATTERN:-%5p} %m%n"
